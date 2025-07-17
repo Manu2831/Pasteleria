@@ -8,7 +8,7 @@ body {
 /* Layout en 3 columnas */
 .layout {
   display: grid;
-  grid-template-columns: 220px 1fr 280px;
+  grid-template-columns: 200px 1fr 200px;
   min-height: 100vh;
 }
 
@@ -28,7 +28,7 @@ body {
   padding: 0;
 }
 .sidebar nav li {
-  margin: 0.7rem 0;
+  margin: 0.5rem 0;
 }
 .sidebar nav a {
   text-decoration: none;
@@ -39,13 +39,13 @@ body {
 /* -------- MAIN (CENTRO) -------- */
 .main {
   padding: 2rem;
-  max-width: 900px;
+  width: 800px;
   margin: 0 auto; /* Centrado del contenido dentro del área central */
 }
 .cakes {
   display: grid;
   grid-template-columns: repeat(4,1fr);
-  gap: 1rem;
+  gap: 2rem;
 }
 .card {
   background: white;
