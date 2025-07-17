@@ -26,7 +26,15 @@
       const [cart, setCart] = React.useState([]);
 //Juli was here
       const addToCart = (cake) => {
-        setCart([...cart, cake]);
+        const nuevoCarrito = [...cart];
+        const existingCake = nuevoCarrito.find(item => item.name === cake.name);
+        if (existingCake) {
+          existingCake.cantidad+= 1; 
+          console.log(`Cantidad actualizada: ${existingCake.cantidad}`); // Debugging line
+        } else{
+            nuevoCarrito.push({ ...cake, cantidad: 1 });
+          }
+        setCart(nuevoCarrito);
       };
 
       const removeFromCart = (index) => {
@@ -48,7 +56,7 @@
         clearCart();
       };
 
-      const total = cart.reduce((acc, item) => acc + item.price, 0);
+      const total = cart.reduce((acc, item) => acc + item.price * item.cantidad, 0);
 
       const handleContactSubmit = (e) => {
         e.preventDefault();
@@ -83,7 +91,7 @@
                   <img src={cake.image} alt={cake.name} />
                   <h3>{cake.name}</h3>
                   <p className="descripcion">{cake.description}</p>
-                  <p><strong>${cake.price.toLocaleString()} COP</strong></p>
+                  <p><strong>${cake.price.toLocaleString()} </strong></p>
                   <button onClick={() => addToCart(cake)}>Agregar al carrito</button>
                 </div>
               ))}
@@ -97,7 +105,7 @@
             <ul>
               {cart.map((item, index) => (
                 <li key={index}>
-                  {item.name} - ${item.price.toLocaleString()} COP
+                  {item.name} - ${item.price.toLocaleString() * item.cantidad} COP - Cantidad: {item.cantidad || 1}
                   <button onClick={() => removeFromCart(index)}>Eliminar</button>
                 </li>
               ))}
