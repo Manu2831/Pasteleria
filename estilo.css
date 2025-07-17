@@ -73,6 +73,11 @@ body {
   cursor: pointer;
 }
 
+.descripcion{
+  text-align: left;
+  height: 90px;
+}
+
 /* -------- CARRITO (DERECHA) -------- */
 .cart {
   background: #fff4e6;
