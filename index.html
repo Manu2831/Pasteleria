@@ -147,7 +147,7 @@
                 <div key={index} className="card">
                   <img src={cake.image} alt={cake.name} />
                   <h3>{cake.name}</h3>
-                  <p className="descripcion">{cake.description}</p>
+                  <p>{cake.description}</p>
                   <div className="price">
                     <p><strong>${cake.price.toLocaleString()} COP</strong></p>
                     <button onClick={() => addToCart(cake)}>Agregar al carrito</button>
