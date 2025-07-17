@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Le Repastelerie</title>
+  <link rel="stylesheet" href="estilo.css" />
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const cakes = [
+      { name: "Pastel de Chocolate", price: 25000, description: "Delicioso pastel con cobertura de chocolate amargo.", image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587" },
+      { name: "Pastel de Vainilla", price: 22000, description: "Clásico pastel suave con esencia natural de vainilla.", image: "https://images.unsplash.com/photo-1599785209798-fc5ed146d126" },
+      { name: "Pastel de Zanahoria", price: 27000, description: "Jugoso pastel con zanahoria rallada y nueces.", image: "https://images.unsplash.com/photo-1542838132-92c53300491e" },
+      { name: "Pastel Red Velvet", price: 30000, description: "Elegante pastel rojo con glaseado de queso crema.", image: "https://images.unsplash.com/photo-1586985289230-089d6a62b8d8" },
+      { name: "Pastel de Frutas", price: 28000, description: "Relleno de frutas frescas con crema pastelera.", image: "https://images.unsplash.com/photo-1589739906081-b5a5e67b16b7" }
+    ];
+
+    function App() {
+      const [cart, setCart] = React.useState([]);
+
+      const addToCart = (cake) => {
+        setCart([...cart, cake]);
+      };
+
+      const removeFromCart = (index) => {
+        const updatedCart = [...cart];
+        updatedCart.splice(index, 1);
+        setCart(updatedCart);
+      };
+
+      const clearCart = () => {
+        setCart([]);
+      };
+
+      const submitOrder = () => {
+        if (cart.length === 0) {
+          alert("El carrito está vacío.");
+          return;
+        }
+        alert("Su solicitud se envió correctamente.");
+        clearCart();
+      };
+
+      const total = cart.reduce((acc, item) => acc + item.price, 0);
+
+      const handleContactSubmit = (e) => {
+        e.preventDefault();
+        alert("Gracias por contactarnos. Pronto te responderemos.");
+        e.target.reset();
+      };
+
+      return (
+        <div className="layout">
+          {/* Sidebar */}
+          <aside className="sidebar">
+            <nav>
+              <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#cakes">Producto</a></li>
+                <li><a href="#cart">Mi Carrito</a></li>
+                <li><a href="#about">¿Quiénes somos?</a></li>
+                <li><a href="#contact">Contáctanos</a></li>
+              </ul>
+            </nav>
+          </aside>
+
+          {/* Main */}
+          <main className="main">
+            <h1>Le Repastelerie</h1>
+            <section id="cakes" className="cakes">
+              {cakes.map((cake, index) => (
+                <div key={index} className="card">
+                  <img src={cake.image} alt={cake.name} />
+                  <h3>{cake.name}</h3>
+                  <p>{cake.description}</p>
+                  <p><strong>${cake.price.toLocaleString()} COP</strong></p>
+                  <button onClick={() => addToCart(cake)}>Agregar al carrito</button>
+                </div>
+              ))}
+            </section>
+          </main>
+          
+
+          {/* Cart */}
+          <aside className="cart" id="cart">
+            <h2>Mi Carrito (<span>{cart.length}</span>)</h2>
+            <ul>
+              {cart.map((item, index) => (
+                <li key={index}>
+                  {item.name} - ${item.price.toLocaleString()} COP
+                  <button onClick={() => removeFromCart(index)}>Eliminar</button>
+                </li>
+              ))}
+            </ul>
+            <p>Total: ${total.toLocaleString()} COP</p>
+            <button onClick={clearCart}>Vaciar carrito</button>
+            <button onClick={submitOrder}>Finalizar compra</button>
+          </aside>
+          {/* Contact Form */}
+          <section id="contact" className="contact">
+            <h2>Formulario de contacto</h2>
+            <form onSubmit={handleContactSubmit}>
+              <input type="text" placeholder="Nombre completo" required />
+              <input type="email" placeholder="Correo electrónico" required />
+              <input type="tel" placeholder="Teléfono" required />
+              <textarea placeholder="Mensaje o solicitud especial" rows="4"></textarea>
+              <button type="submit">Enviar</button>
+            </form>
+          </section>
+
+          
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>
