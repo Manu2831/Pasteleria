@@ -28,7 +28,15 @@
       const [mostrarCarrito, setMostrarCarrito] = React.useState(false);
 
       const addToCart = (cake) => {
-        setCart([...cart, cake]);
+        setCart(prevCart => {
+        const index = prevCart.findIndex(item => item.name === cake.name);
+        if (index !== -1) {
+          const updatedCart = [...prevCart];
+          updatedCart[index].cantidad += 1;
+          return updatedCart;
+        }
+        return [...prevCart, { ...cake, cantidad: 1 }];
+        });
       };
 
       const removeFromCart = (index) => {
@@ -49,8 +57,12 @@
         alert("Su solicitud se envió correctamente.");
         clearCart();
       };
-
-      const total = cart.reduce((acc, item) => acc + item.price, 0);
+      const calcularIVA=(total)=>{
+        return(total*0.19);
+      }
+      const total = cart.reduce((acc, item) => acc + item.price * item.cantidad, 0);
+      const IVA = calcularIVA(total);
+      const totalIVa = IVA+total;
 
       const handleContactSubmit = (e) => {
         e.preventDefault();
@@ -136,8 +148,10 @@
                   <img src={cake.image} alt={cake.name} />
                   <h3>{cake.name}</h3>
                   <p className="descripcion">{cake.description}</p>
-                  <p><strong>${cake.price.toLocaleString()} COP</strong></p>
-                  <button onClick={() => addToCart(cake)}>Agregar al carrito</button>
+                  <div className="price">
+                    <p><strong>${cake.price.toLocaleString()} COP</strong></p>
+                    <button onClick={() => addToCart(cake)}>Agregar al carrito</button>
+                  </div>
                 </div>
               ))}
               </section>
@@ -156,7 +170,8 @@
               <ul>
               {cart.map((item, index) => (
                 <li key={index}>
-                  {item.name} - ${item.price.toLocaleString()} COP
+                  {item.name} x{item.cantidad} - ${item.price.toLocaleString()} COP
+                  
                   <button onClick={() => removeFromCart(index)}>Eliminar</button>
                 </li>
               ))}
