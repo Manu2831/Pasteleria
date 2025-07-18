@@ -30,6 +30,7 @@
     function App() {
       const [cart, setCart] = React.useState([]);
       const [mostrarCarrito, setMostrarCarrito] = React.useState(false);
+      const [resenas, setResenas] = React.useState([]); // Guardar reseñas por producto
 
       const addToCart = (cake) => {
         setCart(prevCart => {
@@ -112,6 +113,10 @@
     doc.save("factura_le-repastelerie.pdf");
   }
 
+  const agregarResena = (resena) => {
+        setResenas(prevResenas => [...prevResenas, resena]);
+    };
+
       return (
         <>
         
@@ -185,7 +190,7 @@
             <p>Total: ${totalIVa.toLocaleString()}</p>
             <button onClick={clearCart}>Vaciar carrito</button>
             <button onClick={submitOrder}>Finalizar compra</button>
-            <button onClick={exportarFacturaPDF}><i class="fas fa-file-pdf"></i>Exportar Factura</button>
+            <button onClick={exportarFacturaPDF}><i className="fas fa-file-pdf"></i>Exportar Factura</button>
             </div>
             
           </aside>
@@ -196,7 +201,7 @@
           
         </div>
         <div className="footer">
-          <p><span>©2025 Todos los derechos reservados a </span></p>
+    
           {/* Contact Form */}
             
             <section id="contact" className="contact">
@@ -209,16 +214,62 @@
               <button type="submit">Enviar</button>
             </form>
           </section>
+
+          <div className="resenas-container">
+            <Resenas 
+            resenas={resenas}
+            agregarResena={agregarResena} 
+            />
+          </div>
+
+             <p><span>©2025 Todos los derechos reservados a </span></p>
         </div>
         <div className="floating-pastry-chef">
           <img
-            class="floating-pastry-chef"
+            className="floating-pastry-chef"
               src="https://www.gifss.com/profesiones/pastelero/pastelero-02.gif"
           alt="Pastelero animado" />
           </div>
           
         </>
       );
+
+      // Reseñas
+
+     function Resenas({ resenas, agregarResena }) {
+    const [resena, setResena] = React.useState("");
+
+    const manejarResena = (e) => {
+        setResena(e.target.value);
+    };
+
+    const enviarResena = (e) => {
+        e.preventDefault();
+        if (resena.trim()) {
+            agregarResena(resena);
+            setResena(""); // Limpiar el campo de reseña
+        }
+    };
+
+    return (
+        <div className="resenas">
+            <h4>Reseñas:</h4>
+            <ul style={{ padding: 0, margin:'0 auto', listStyle: 'none', width: '90%' }}>
+                {resenas.map((r, index) => (
+                    <li key={index}>{r}</li>
+                ))}
+            </ul>
+            <form onSubmit={enviarResena}>
+                <textarea 
+                    value={resena} 
+                    onChange={manejarResena} 
+                    placeholder="Deja tu reseña aquí..."
+                />
+                <button type="submit">Agregar Reseña</button>
+            </form>
+        </div>
+    );
+}
     }
 
     ReactDOM.createRoot(document.getElementById("root")).render(<App />);

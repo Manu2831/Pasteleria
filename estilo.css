@@ -212,6 +212,23 @@ form button {
   border-radius: 5px;
   cursor: pointer;
 }
+
+/*------------RESEÑAS----------*/
+
+.resenas {
+  grid-column: 1 / span 3; /* Ocupa todo el ancho */
+  padding: 2rem;
+  background-color: #fef9f5;
+  max-width: 600px;
+  margin: 2rem auto; /* Centrado horizontal */
+  border-radius: 8px;
+}
+
+.resenas-container {
+  max-height: 300px; /* Altura máxima para el contenedor */
+  overflow-y: auto; /* Agrega scroll si es necesario */
+}
+
 /*------------FOOTER----------*/
 .footer{
   padding: 5px;
