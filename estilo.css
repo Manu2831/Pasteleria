@@ -5,13 +5,30 @@ body {
 }
 
 /* Layout en 3 columnas */
+/* Fondo desenfocado usando pseudo-elemento */
 .layout {
+  position: relative;
   display: grid;
   grid-template-columns: 200px 1fr 200px;
   min-height: 100vh;
   gap: 0px;
   background-color: #ffffff;
 }
+.layout::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url('./FondoPastelerie.jpg');
+  background-size: cover;
+  background-position: center;
+  filter: blur(3px);
+  z-index: 0;
+}
+.layout > * {
+  position: relative;
+  z-index: 1;
+}
+
 /*--------- HEADER(ARRIBA)-----------*/
 
 .header{
@@ -75,6 +92,10 @@ body {
 
 /* -------- MAIN (CENTRO) -------- */
 .main {
+  
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   padding: 2rem;
   max-width: 800px;
   margin: 0 auto; 
