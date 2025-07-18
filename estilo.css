@@ -218,3 +218,15 @@ form button {
   text-align: center;
   background-color: #fef9f5;
 }
+.floating-pastry-chef {
+  position: fixed;
+  left: 20px;       /* 👈 ahora a la izquierda */
+  bottom: 20px;     /* sigue pegado abajo */
+  z-index: 9999;
+  width: 180px;
+  height: auto;
+  pointer-events: none;
+  background: transparent; /* 👈 fondo transparente */
+}
+
+
