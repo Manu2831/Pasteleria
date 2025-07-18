@@ -140,6 +140,7 @@
     };
 
     return (
+      <section id= "resenas" className="resenas">
         <div className="resenas">
             <h4>Reseñas:</h4>
             <ul style={{ padding: 0, margin:'0 auto', listStyle: 'none', width: '90%', border:'none' }}>
@@ -156,6 +157,7 @@
                 <button type="submit">Agregar Reseña</button>
             </form>
         </div>
+        </section>
     );
 }
 
@@ -195,9 +197,16 @@
                 <li><a href="#cakes">Producto</a></li>
                 <li><a href="#footer">¿Quiénes somos?</a></li>
                 <li><a href="#contact">Realiza tu pedido</a></li>
-                <li> <button onClick={()=>setMostrarResenas(!mostrarResenas)}>Comparte tu opinion</button></li>
+                <li> <button onClick={()=>setMostrarResenas(!mostrarResenas)}><a href="#resenas">comparte tu opinion</a> </button></li>
               </ul>
+
             </nav>
+            <div className="floating-pastry-chef">
+          <img
+            className="floating-pastry-chef"
+              src="https://www.gifss.com/profesiones/pastelero/pastelero-02.gif"
+          alt="Pastelero animado" />
+          </div>
           </aside>
 
           {/* Main */}
@@ -271,7 +280,7 @@
           </aside>
           )} 
         </div>
-        <footer>
+        <section id="footer" className="footer">
           <div className="footer">
           {mostrarResenas&&(
           <div className="resenas-container">
@@ -287,14 +296,9 @@
              <p><span>Creamos postres únicos que deleitan los sentidos y endulzan tus momentos más especiales.</span></p>
         </div>
 
-        </footer>
+        </section>
         
-        <div className="floating-pastry-chef">
-          <img
-            className="floating-pastry-chef"
-              src="https://www.gifss.com/profesiones/pastelero/pastelero-02.gif"
-          alt="Pastelero animado" />
-          </div>
+        
           
         </>
       );
