@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Le Repastelerie</title>
   <link rel="stylesheet" href="estilo.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+  <style>@import url('https://fonts.googleapis.com/css2?family=Merienda:wght@300..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');</style>
   <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -30,7 +32,9 @@
     function App() {
       const [cart, setCart] = React.useState([]);
       const [mostrarCarrito, setMostrarCarrito] = React.useState(false);
-      const [resenas, setResenas] = React.useState([]); // Guardar reseñas por producto
+      const [resenas, setResenas] = React.useState([]); 
+      const [mostrarResenas, setMostrarResenas] = React.useState(false);
+      const [searchTerm,setSearchTerm] = React.useState("");
 
       const addToCart = (cake) => {
         setCart(prevCart => {
@@ -74,6 +78,10 @@
         alert("Gracias por contactarnos. Pronto te responderemos.");
         e.target.reset();
       };
+    const filteredCakes = cakes.filter(cake =>
+      cake.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+   
   function exportarFacturaPDF() {
     if (cart.length === 0) {
       alert('El carrito está vacío.');
@@ -116,6 +124,40 @@
   const agregarResena = (resena) => {
         setResenas(prevResenas => [...prevResenas, resena]);
     };
+    function Resenas({ resenas, agregarResena }) {
+    const [resena, setResena] = React.useState("");
+
+    const manejarResena = (e) => {
+        setResena(e.target.value);
+    };
+
+    const enviarResena = (e) => {
+        e.preventDefault();
+        if (resena.trim()) {
+            agregarResena(resena);
+            setResena(""); // Limpiar el campo de reseña
+        }
+    };
+
+    return (
+        <div className="resenas">
+            <h4>Reseñas:</h4>
+            <ul style={{ padding: 0, margin:'0 auto', listStyle: 'none', width: '90%', border:'none' }}>
+                {resenas.map((r, index) => (
+                    <li key={index}>{r}</li>
+                ))}
+            </ul>
+            <form onSubmit={enviarResena}>
+                <textarea 
+                    value={resena} 
+                    onChange={manejarResena} 
+                    placeholder="Deja tu reseña aquí..."
+                />
+                <button type="submit">Agregar Reseña</button>
+            </form>
+        </div>
+    );
+}
 
       return (
         <>
@@ -141,9 +183,19 @@
             <nav>
               <ul>
                 <li><a href="#">Home</a></li>
+                <li>
+                  <input 
+                    type="text" 
+                    placeholder="Buscar pastel..." 
+                    value={searchTerm} 
+                    onChange={(e) => setSearchTerm(e.target.value)} 
+                    style={{ padding: '5px', width: '100%', borderRadius: '5px' }}
+                    />
+                </li>
                 <li><a href="#cakes">Producto</a></li>
-                <li><a href="#about">¿Quiénes somos?</a></li>
-                <li><a href="#contact">Contáctanos</a></li>
+                <li><a href="#footer">¿Quiénes somos?</a></li>
+                <li><a href="#contact">Realiza tu pedido</a></li>
+                <li> <button onClick={()=>setMostrarResenas(!mostrarResenas)}>Comparte tu opinion</button></li>
               </ul>
             </nav>
           </aside>
@@ -152,11 +204,14 @@
           <main className="main">
             
             <section id="cakes" className="cakes">
-              {cakes.map((cake, index) => (
+              {filteredCakes.map((cake, index) => (
                 <div key={index} className="card">
                   <img src={cake.image} alt={cake.name} />
                   <h3>{cake.name}</h3>
-                  <p>{cake.description}</p>
+                  <div className="description">
+                    <p>{cake.description}</p>
+                  </div>
+                  
                   <div className="price">
                     <p><strong>${cake.price.toLocaleString()} COP</strong></p>
                     <button onClick={() => addToCart(cake)}>Agregar al carrito</button>
@@ -164,9 +219,29 @@
                 </div>
               ))}
               </section>
-          </main>
+              {/* Contact Form */}
+              
+              <section id="contact" className="contact">
+                <h2>Haz tu pedido</h2>
+                <form onSubmit={handleContactSubmit}>
+                  <input type="text" placeholder="Nombre" required />
+                  <input type="date"  required />
+                  <select name="pedido" id="pedido">
+                    <option value="t1">Pastel de Chocolate</option>
+                    <option value="t2">Pastel de Vainilla</option>
+                    <option value="t3">Pastel de Zanahoria</option>
+                    <option value="t4">Pastel Red Velvet</option>
+                    <option value="t5">Pastel de Frutas</option>
+                    <option value="t6">Pastel de Limón</option>
+                    <option value="t7">Pastel de Coco</option>
+                    <option value="t8">Pastel de Café</option>
+                  </select>
+                  <textarea placeholder="Mensaje o solicitud especial" rows="4"></textarea>
+                  <button type="submit">Enviar</button>
+                </form>
+             </section>
+            </main>
           
-
           {/* Cart */}
           {mostrarCarrito &&(
 
@@ -194,36 +269,26 @@
             </div>
             
           </aside>
-          )}
-          
-          
-
-          
+          )} 
         </div>
-        <div className="footer">
-    
-          {/* Contact Form */}
-            
-            <section id="contact" className="contact">
-            <h2>Contactanos</h2>
-            <form onSubmit={handleContactSubmit}>
-              <input type="text" placeholder="Nombre" required />
-
-              <input type="tel" placeholder="Teléfono" required />
-              <textarea placeholder="Mensaje o solicitud especial" rows="4"></textarea>
-              <button type="submit">Enviar</button>
-            </form>
-          </section>
-
+        <footer>
+          <div className="footer">
+          {mostrarResenas&&(
           <div className="resenas-container">
+            
             <Resenas 
             resenas={resenas}
             agregarResena={agregarResena} 
             />
           </div>
-
-             <p><span>©2025 Todos los derechos reservados a </span></p>
+          )}
+             <p><span>©2025 Todos los derechos reservados a Repastelerie</span></p>
+             <p><span>En Le Repastelerie creemos en el arte de la pastelería hecha con pasión, detalle y mucho sabor. </span></p>
+             <p><span>Creamos postres únicos que deleitan los sentidos y endulzan tus momentos más especiales.</span></p>
         </div>
+
+        </footer>
+        
         <div className="floating-pastry-chef">
           <img
             className="floating-pastry-chef"
@@ -236,41 +301,7 @@
 
       // Reseñas
 
-     function Resenas({ resenas, agregarResena }) {
-    const [resena, setResena] = React.useState("");
-
-    const manejarResena = (e) => {
-        setResena(e.target.value);
-    };
-
-    const enviarResena = (e) => {
-        e.preventDefault();
-        if (resena.trim()) {
-            agregarResena(resena);
-            setResena(""); // Limpiar el campo de reseña
-        }
-    };
-
-    return (
-        <div className="resenas">
-            <h4>Reseñas:</h4>
-            <ul style={{ padding: 0, margin:'0 auto', listStyle: 'none', width: '90%' }}>
-                {resenas.map((r, index) => (
-                    <li key={index}>{r}</li>
-                ))}
-            </ul>
-            <form onSubmit={enviarResena}>
-                <textarea 
-                    value={resena} 
-                    onChange={manejarResena} 
-                    placeholder="Deja tu reseña aquí..."
-                />
-                <button type="submit">Agregar Reseña</button>
-            </form>
-        </div>
-    );
-}
-    }
+         }
 
     ReactDOM.createRoot(document.getElementById("root")).render(<App />);
   </script>

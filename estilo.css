@@ -1,5 +1,5 @@
 body {
-  font-family: "Segoe UI", sans-serif;
+  font-family: "Merienda";
   margin: 0;
   color: #333;
 }
@@ -32,15 +32,17 @@ body {
 /*--------- HEADER(ARRIBA)-----------*/
 
 .header{
+  background: linear-gradient(to right, #fff8f2, #fff1e6);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 2.5rem;
   position: relative;
-  background: #f6f6f6;
+
   box-shadow: 0px 4px 2px #0000;
 }
 .slogan{
+  font-family: "Merienda";
   position: absolute;
   left: 50%;
   transform: translateX(-45%);
@@ -62,7 +64,7 @@ body {
 
 /* -------- SIDEBAR (IZQUIERDA) -------- */
 .sidebar {
-  background-color: #fffbfb;
+  background-color: #fffafa;
   padding: 1rem;
   box-shadow: 2px 0 5px rgba(0,0,0,0.1);
 }
@@ -84,6 +86,14 @@ body {
   margin: 0.5rem 0;
   padding: 10px;
 }
+.sidebar nav button{
+  background: none;
+  border: none;
+  font-weight: bold;
+  text-decoration: none;
+  color: #a0522d;
+font-size: 0.86rem;
+}
 .sidebar nav a {
   text-decoration: none;
   color: #a0522d;
@@ -102,7 +112,12 @@ body {
   justify-content: space-between;
   gap: 10rem;
 }
+.description{
+  font-family: "Segoe UI", sans-serif;
+  height: 90px;
+}
 .cakes {
+  
   display: grid;
   grid-template-columns: repeat(4,1fr);
   gap: 1rem;
@@ -111,7 +126,7 @@ body {
 .card {
   background: white;
   border-radius: 8px;
-
+  
   padding: 1rem;
   text-align: center;
 }
@@ -152,10 +167,10 @@ body {
   border-left: 1px solid #ddd;
 }
 .cart-tittle{
-  background-color: #797979;
+  background-color: #a5a5a5;
   color: white;
   margin: 0px;
-  width: 100%;
+  width: 200;
   padding: 1rem;
   box-shadow: 2px 0 5px rgba(56, 56, 56, 0.1);
 }
@@ -176,7 +191,7 @@ body {
   display: block;
   width: 100%;
   margin-top: 0.5rem;
-  padding: 0.3rem;
+  padding: 0.5rem 0.3rem;
   background-color: #ff7e43aa;
   color: white;
   border: none;
@@ -188,27 +203,43 @@ body {
 
 /* -------- FORMULARIO (DEBAJO DEL MAIN, CENTRADO) -------- */
 .contact {
-  grid-column: 1 / span 3; /* Ocupa todo el ancho */
+  display: flex;
+  flex-direction: column ;
   padding: 2rem;
-  background-color: #fef9f5;
+  background-color: transparent;
   max-width: 600px;
-  margin: 2rem auto; /* Centrado horizontal */
+  margin: 2rem ; 
   border-radius: 8px;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
   
 }
+.contact h2{
+  text-align: center;
+}
 form input, form textarea {
-  width: 85%;
+  width: 100%;
   margin: 0.5rem 0;
   padding: 0.7rem;
   border: 1px solid #ccc;
   border-radius: 5px;
+  align-items: center;
+}
+form select{
+  width: 100%;
+  margin: 0.5rem 0;
+  padding: 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  align-items: center;
 }
 form button {
   background: #ff7e43aa;
   color: white;
   border: none;
   padding: 0.7rem;
-  width: 80%;
+  width: 100%;
   border-radius: 5px;
   cursor: pointer;
 }
@@ -225,8 +256,7 @@ form button {
 }
 
 .resenas-container {
-  max-height: 300px; /* Altura máxima para el contenedor */
-  overflow-y: auto; /* Agrega scroll si es necesario */
+  max-height: 300px; 
 }
 
 /*------------FOOTER----------*/
@@ -237,13 +267,13 @@ form button {
 }
 .floating-pastry-chef {
   position: fixed;
-  left: 20px;       /* 👈 ahora a la izquierda */
-  bottom: 20px;     /* sigue pegado abajo */
+  left: 20px;       
+  bottom: 20px;    
   z-index: 9999;
   width: 180px;
   height: auto;
   pointer-events: none;
-  background: transparent; /* 👈 fondo transparente */
+  background: transparent; 
 }
 
 
