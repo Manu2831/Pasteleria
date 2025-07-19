@@ -44,8 +44,8 @@ body {
 .slogan{
   font-family: "Yeseva One";
   position: absolute;
-  color: #9e6e58;
   font-size: 20px;
+  color: #9e6e58;
   left: 50%;
   transform: translateX(-45%);
   text-align: center;
