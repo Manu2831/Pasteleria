@@ -269,7 +269,7 @@ form button {
   background-color: #fef9f5;
 }
 .floating-pastry-chef {
-      
+  margin-top: 3rem; 
   width: 180px;
   height: auto;
   pointer-events: none;
